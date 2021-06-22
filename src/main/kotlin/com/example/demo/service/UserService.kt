@@ -16,4 +16,6 @@ class UserService {
     fun login(user: User) = userMapper.login(user)
 
     fun getUserId(username: String) = userMapper.getUserId(username)
+
+    fun updatePassword(user: User) = userMapper.updatePassword(user)
 }

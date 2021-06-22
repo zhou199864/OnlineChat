@@ -8,4 +8,5 @@ interface UserMapper {
     fun login(user: User): Long?
     fun registerUser(user: User): Long?
     fun getUserId(username: String): Long?
+    fun updatePassword(user: User): Long
 }

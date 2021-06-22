@@ -16,4 +16,6 @@ class UserToken {
 
     fun tokenHasContains(token: String) = hashOperations.entries(GlobalVariable.REDIS_TOKEN_LIST).containsValue(token)
 
+    fun getUsernameByToken(token: String): String = hashOperations.entries(GlobalVariable.REDIS_TOKEN_LIST).filter { it.value == token }.keys.iterator().next()
+
 }

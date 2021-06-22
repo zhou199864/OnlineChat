@@ -24,7 +24,7 @@ class UserController {
         userService.login(user)?.let {
             val token = generalToken()
             userToken.addToken(user.username, token)
-            return buildOkResponseMsg(msg = "login successful.",obj = mapOf("token" to token))
+            return buildOkResponseMsg(msg = "login successful.", obj = mapOf("token" to token))
         }
         return buildErrorResponseMsg(msg = "login failed. please check it you account and password.")
     }
@@ -48,14 +48,21 @@ class UserController {
 
     @RequestMapping(value = ["/updateUserInfo"], method = [RequestMethod.POST])
     fun updateUserInfo(json: String): ResponseMsg {
-        
         return buildOkResponseMsg("user information had changed.")
     }
 
     @RequestMapping(value = ["/updatePassword"], method = [RequestMethod.POST])
-    fun updatePassword(json: String): ResponseMsg {
-        GsonUtil.getValue(json, listOf("token", "username"))
-        return buildOkResponseMsg("password had changed please login again.")
+    fun updatePassword(@RequestBody json: String): ResponseMsg {
+        val data = GsonUtil.getValue(json, listOf("token", "password"))
+        data?.let {
+            if (data.size < 2) buildErrorResponseMsg("param error please check it.")
+            val username = userToken.getUsernameByToken(data[0])
+            if (userToken.tokenHasContains(data[0])) {
+                if (userService.updatePassword(User(username, data[1])) == 1L)
+                    return buildOkResponseMsg("password had changed please login again.")
+            }
+            return buildErrorResponseMsg("token error please check it.")
+        }
     }
 
     @RequestMapping(value = ["/getVerifyCode"], method = [RequestMethod.POST])

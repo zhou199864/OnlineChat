@@ -1,6 +1,8 @@
 package com.example.demo
 
+import com.example.demo.model.User
 import com.example.demo.service.RedisService
+import com.example.demo.service.UserService
 import com.example.demo.util.GsonUtil
 import com.example.demo.util.UserToken
 import com.example.demo.util.generalToken
@@ -22,6 +24,9 @@ class SpringbootKotlinApplicationTests {
     @Autowired
     lateinit var userToken: UserToken
 
+    @Autowired
+    lateinit var userService: UserService
+
     @Test
     fun contextLoads() {
 //        println(generalToken())
@@ -42,6 +47,10 @@ class SpringbootKotlinApplicationTests {
 
 //        println(GsonUtil.getSingleValue(json, "address"))
 //        println(GsonUtil.getValue(json, listOf("name","age")))
+
+//        println(userService.updatePassword(User("zmfa", "zmfyayaya")))
+//        println(userToken.getUsernameByToken("vw271ze7se2o8yh6e4y83c14255w6372"))
+
     }
 
 }

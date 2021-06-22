@@ -11,4 +11,7 @@
     <select id="login" resultType="java.lang.Long">
         SELECT id FROM user WHERE username = #{username} AND password = #{password};
     </select>
+    <update id="updatePassword">
+        update user set password = #{password} where username = #{username}
+    </update>
 </mapper>
